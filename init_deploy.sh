@@ -48,7 +48,7 @@ su ceph <<EOF
 mkdir -p /home/ceph/my-cluster
 cd /home/ceph/my-cluster
 ceph-deploy new node1
-ceph-deploy install node1 node2 node3
+ceph-deploy install deploy node1 node2 node3
 ceph-deploy mon create node1
 ceph-deploy gatherkeys node1
 ceph-deploy osd prepare node2:/tmp/osd0 node3:/tmp/osd1
