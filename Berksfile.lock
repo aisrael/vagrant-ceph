@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "apache2": {
+      "locked_version": "1.6.6"
+    },
+    "ceph": {
+      "locked_version": "0.1.0",
+      "git": "git://github.com/ceph/ceph-cookbooks.git",
+      "ref": "f2262864e6c5245147fde1e8ffabbdbabc48e7e3"
+    },
+    "apt": {
+      "locked_version": "2.3.0"
+    }
+  }
+}
