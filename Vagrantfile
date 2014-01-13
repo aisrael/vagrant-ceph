@@ -10,7 +10,7 @@ Vagrant.configure('2') do |config|
       node.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box'
       node.vm.network :private_network, ip: "192.168.42.1#{n}"
       node.vm.provision 'shell', path: 'scripts/init_node.sh'
-      node.vm.provision 'shell', inline: "su ceph -c 'mkdir /tmp/osd#{n - 2}'" if n > 1
+      node.vm.provision 'shell', inline: "su ceph -c 'mkdir -p /var/tmp/osd#{n - 2}'" if n > 1
     end
   end
 

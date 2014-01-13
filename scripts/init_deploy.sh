@@ -51,7 +51,7 @@ ceph-deploy new node1
 ceph-deploy install deploy node1 node2 node3
 ceph-deploy mon create node1
 ceph-deploy gatherkeys node1
-ceph-deploy osd prepare node2:/tmp/osd0 node3:/tmp/osd1
-ceph-deploy osd activate node2:/tmp/osd0 node3:/tmp/osd1
+ceph-deploy osd prepare node2:/var/tmp/osd0 node3:/var/tmp/osd1
+ceph-deploy osd activate node2:/var/tmp/osd0 node3:/var/tmp/osd1
 ceph-deploy admin deploy node1 node2 node3
 EOF
