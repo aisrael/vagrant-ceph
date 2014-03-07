@@ -1,0 +1,10 @@
+deploy ansible_ssh_host=192.168.42.10
+node1 ansible_ssh_host=192.168.42.11
+node2 ansible_ssh_host=192.168.42.12
+node3 ansible_ssh_host=192.168.42.13
+
+[deploy]
+deploy
+
+[nodes]
+node[1:3]

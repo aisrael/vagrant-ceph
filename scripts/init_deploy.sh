@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo apt-get update
-sudo apt-get install -y expect
 
 sudo useradd -s /bin/bash -m ceph
 echo "ceph:ceph"|sudo chpasswd

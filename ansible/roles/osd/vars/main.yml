@@ -1,0 +1,2 @@
+---
+osd_dir: "{{ansible_hostname}}"
