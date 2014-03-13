@@ -1,5 +1,5 @@
 deploy ansible_ssh_host=192.168.42.10
-node1 ansible_ssh_host=192.168.42.11
+node1 ansible_ssh_host=192.168.42.11 osd_dir=/dev/null
 node2 ansible_ssh_host=192.168.42.12
 node3 ansible_ssh_host=192.168.42.13
 

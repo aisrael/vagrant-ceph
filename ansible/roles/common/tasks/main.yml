@@ -50,7 +50,12 @@
   lineinfile: dest=/etc/hosts insertafter=EOF line='192.168.42.13   node3'
   sudo: yes
 
-- name: Create ceph user
-  # Created with: openssl passwd -1 ceph
-  user: name=ceph password=$1$DmCVnC7z$qnW1sqRIKfLQp7jK3g3Uq0
-  sudo: yes
+- name: mkdir -p /home/ceph/.ssh
+  file: name=~/.ssh state=directory
+
+- name: ssh-keygen -N "" -f ~/.ssh/id_rsa
+  command: ssh-keygen -N "" -f ~/.ssh/id_rsa
+
+- shell: expect -c 'spawn ssh-copy-id ceph@node1; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
+expect -c 'spawn ssh-copy-id ceph@node2; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
+expect -c 'spawn ssh-copy-id ceph@node3; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'

@@ -5,7 +5,7 @@ Vagrant.configure('2') do |config|
 
   config.vm.define 'deploy' do |deploy|
     deploy.vm.hostname = 'deploy'
-    deploy.vm.box = 'ubuntu-12.04-server-amd64-vbox-4.3.6'
+    deploy.vm.box = 'ubuntu-12.04-server-amd64-vbox-4.3.8'
 #    deploy.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box'
     deploy.vm.network :private_network, ip: '192.168.42.10'
     deploy.vm.network 'forwarded_port', guest: 5000, host: 5000
@@ -21,7 +21,7 @@ Vagrant.configure('2') do |config|
   (1..3).each do |n|
     config.vm.define "node#{n}" do |node|
       node.vm.hostname = "node#{n}"
-      node.vm.box = 'ubuntu-12.04-server-amd64-vbox-4.3.6'
+      node.vm.box = 'ubuntu-12.04-server-amd64-vbox-4.3.8'
 #      node.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box'
       node.vm.network :private_network, ip: "192.168.42.1#{n}"
 

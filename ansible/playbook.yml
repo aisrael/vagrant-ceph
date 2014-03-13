@@ -3,7 +3,12 @@
   roles:
     - deploy
 
-- hosts: node*
+- hosts: node1
+  roles:
+    - node
+    - mon
+
+- hosts: node2:node3
   roles:
     - node
     - { role: osd, osd_dir: "osd{{ansible_hostname|replace('node','')}}" }

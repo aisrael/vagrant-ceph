@@ -1,1 +1,5 @@
 ---
+- name: ceph-deploy install {{inventory_hostname}} (on deploy)
+  command: ceph-deploy install {{inventory_hostname}}
+    chdir=/home/{{ansible_user_id}}/{{cluster_name}}
+  delegate_to: deploy

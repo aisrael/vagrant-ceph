@@ -1,0 +1,6 @@
+---
+- name: ceph-deploy new {{inventory_hostname}} (on deploy)
+  command: ceph-deploy new node1 chdir=~/{{cluster_name}}
+    chdir=/home/{{ansible_user_id}}/{{cluster_name}}
+    creates=ceph.conf
+  delegate_to: deploy

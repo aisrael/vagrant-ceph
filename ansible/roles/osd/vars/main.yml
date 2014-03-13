@@ -1,2 +1,2 @@
 ---
-osd_dir: "{{ansible_hostname}}"
+osd_dir: "/var/ceph/{{ansible_hostname}}"
