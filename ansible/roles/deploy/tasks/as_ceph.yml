@@ -1,0 +1,20 @@
+---
+- name: whoami
+  command: whoami
+  register: w0
+- debug: msg="whoami {{w0.stdout}}"
+
+- name: whoami (sudo)
+  command: whoami
+  sudo: yes
+  register: w1
+- debug: msg="whoami {{w1.stdout}}"
+
+- name: mkdir -p ~/my-cluster
+  file: path="~/{{cluster_name}}" state=directory
+
+- name: mkdir -p /home/ceph/.ssh
+  file: name=~/.ssh state=directory
+
+- name: ssh-keygen -N "" -f /home/ceph/.ssh/id_rsa
+  command: ssh-keygen -N "" -f /home/ceph/.ssh/id_rsa creates=/home/ceph/.ssh/id_rsa

@@ -3,6 +3,3 @@
   command: /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
   sudo: yes
 
-- name: apt-get update
-  apt: update=yes
-  sudo: yes

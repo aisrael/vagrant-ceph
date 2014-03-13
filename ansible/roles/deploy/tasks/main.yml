@@ -8,6 +8,13 @@
    - python-pip
    - python-virtualenv
    - python-pycurl
+   - expect
+  sudo: yes
+
+- name: Create ceph user
+  # Created with: openssl passwd -1 ceph
+  # TODO Turn into variable
+  user: name=ceph password=$1$DmCVnC7z$qnW1sqRIKfLQp7jK3g3Uq0
   sudo: yes
 
 - name: Add Ceph Key
@@ -18,12 +25,12 @@
   command: apt-key update
   sudo: yes
 
-- name: Add Ceph Repo
-  apt_repository: "repo={{item}} state=present"
-  with_items:
-    - 'deb http://ceph.com/debian-{{ ceph.ceph_release }}/ {{ distro_release }} main'
-    - 'deb http://ceph.com/packages/ceph-extras/debian {{ distro_release }} main'
-  notify: apt-get update
+- name: Add ceph repo
+  apt_repository: repo="deb http://ceph.com/debian-{{ ceph.ceph_release }}/ {{ distro_release }} main" state=present update_cache=yes
+  sudo: yes
+
+- name: Add ceph-extras repo
+  apt_repository: repo="deb http://ceph.com/packages/ceph-extras/debian {{ distro_release }} main" state=present update_cache=yes
   sudo: yes
 
 - name: Install Ceph packages
@@ -36,9 +43,33 @@
     - ceph-common
     - ceph-fs-common
     - gdisk
-    - tgt
   sudo: yes
 
-- name: mkdir -p /home/{{ansible_user_id}}/my-cluster (as {{ansible_user_id}})
-  file: path="/home/{{ansible_user_id}}/{{cluster_name}}" state=directory
+- name: Install tgt packages
+  apt: pkg=tgt state=installed
+  environment: proxy_env
+  sudo: yes
 
+- name: whoami
+  command: whoami
+  register: w0
+- debug: msg="whoami {{w0.stdout}}"
+
+- name: whoami (sudo)
+  command: whoami
+  sudo: yes
+  register: w1
+- debug: msg="whoami {{w1.stdout}}"
+
+- name: whoami (sudo + sudo_user)
+  command: whoami
+  sudo: yes
+  sudo_user: ceph
+  register: w2
+- debug: msg="whoami {{w2.stdout}}"
+
+- name: Run as ceph
+  include: as_ceph.yml
+  remote_user: "{{ansible_ssh_user}}"
+  sudo: yes
+  sudo_user: ceph

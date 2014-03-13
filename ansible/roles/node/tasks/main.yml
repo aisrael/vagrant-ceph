@@ -1,5 +1,6 @@
 ---
-- name: ceph-deploy install {{inventory_hostname}} (on deploy)
-  command: ceph-deploy install {{inventory_hostname}}
-    chdir=/home/{{ansible_user_id}}/{{cluster_name}}
+- include: on_deploy.yml
+  remote_user: vagrant
+  sudo: yes
+  sudo_user: ceph
   delegate_to: deploy

@@ -14,6 +14,7 @@ Vagrant.configure('2') do |config|
       ansible.host_key_checking = false
       ansible.playbook = 'ansible/playbook.yml'
       ansible.limit = 'deploy'
+      ansible.ask_sudo_pass
     end
 
   end
@@ -29,10 +30,12 @@ Vagrant.configure('2') do |config|
         ansible.host_key_checking = false
         ansible.playbook = 'ansible/playbook.yml'
         ansible.limit = node.vm.hostname
+        ansible.ask_sudo_pass
       end
     end
   end
 
   config.ssh.forward_agent = true
 
+  # ansible-playbook -i  --private-key=~/.vagrant.d/insecure_private_key -u vagrant playbook.yml
 end

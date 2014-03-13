@@ -1,0 +1,8 @@
+---
+- name: ssh-copy-id to node
+  command: expect -c 'spawn ssh-copy-id ceph@{{inventory_hostname}}; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
+
+- name: ceph-deploy install {{inventory_hostname}}
+  command: ceph-deploy install {{inventory_hostname}}
+    chdir=/home/ceph/{{cluster_name}}
+

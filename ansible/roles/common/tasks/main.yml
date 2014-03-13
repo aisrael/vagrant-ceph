@@ -1,4 +1,22 @@
 ---
+- name: whoami
+  command: whoami
+  register: w0
+- debug: msg="whoami {{w0.stdout}}"
+
+- name: whoami (sudo)
+  command: whoami
+  sudo: yes
+  register: w1
+- debug: msg="whoami {{w1.stdout}}"
+
+- name: whoami (sudo + sudo_user)
+  command: whoami
+  sudo: yes
+  sudo_user: vagrant
+  register: w2
+- debug: msg="whoami {{w2.stdout}}"
+
 - name: Use local apt-cache-ng
   lineinfile: "dest=/etc/apt/apt.conf create=yes insertafter=EOF line='Acquire::http { Proxy \"{{apt_cache_ng_url}}\"; };'"
   sudo: yes
@@ -25,14 +43,10 @@
   notify: update tzdata
   when: cat_etc_timezone.stdout != "{{timezone}}"
 
-- name: check apt last update
-  stat: path=/var/cache/apt
-  register: apt_cache_stat
-
-- name: Update apt cache
-  apt: update_cache=yes
+# Don't update cache if less than an hour old
+- name: apt-get update
+  apt: update_cache=yes cache_valid_time=3600
   sudo: yes
-  when: ansible_date_time.epoch|float - apt_cache_stat.stat.mtime > 60*60*24
 
 - name: Append deploy to /etc/hosts
   lineinfile: dest=/etc/hosts insertafter=EOF line='192.168.42.10   deploy'
@@ -49,13 +63,3 @@
 - name: Append node3 to /etc/hosts
   lineinfile: dest=/etc/hosts insertafter=EOF line='192.168.42.13   node3'
   sudo: yes
-
-- name: mkdir -p /home/ceph/.ssh
-  file: name=~/.ssh state=directory
-
-- name: ssh-keygen -N "" -f ~/.ssh/id_rsa
-  command: ssh-keygen -N "" -f ~/.ssh/id_rsa
-
-- shell: expect -c 'spawn ssh-copy-id ceph@node1; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
-expect -c 'spawn ssh-copy-id ceph@node2; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
-expect -c 'spawn ssh-copy-id ceph@node3; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
