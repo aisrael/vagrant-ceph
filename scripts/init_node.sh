@@ -6,6 +6,9 @@ echo "ceph:ceph"|sudo chpasswd
 echo "ceph ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph
 sudo chmod 0440 /etc/sudoers.d/ceph
 
+sudo mkdir -p /var/ceph
+sudo chown ceph.ceph /var/ceph
+
 sudo cat >> /etc/hosts <<EOF
 
 192.168.42.10   deploy
