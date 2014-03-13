@@ -45,6 +45,10 @@
     - gdisk
   sudo: yes
 
+- name: apt-get update
+  apt: update_cache=yes cache_valid_time=1
+  sudo: yes
+
 - name: Install tgt packages
   apt: pkg=tgt state=installed
   environment: proxy_env
@@ -63,6 +67,7 @@
 
 - name: whoami (sudo + sudo_user)
   command: whoami
+  remote_user: "{{ansible_ssh_user}}"
   sudo: yes
   sudo_user: ceph
   register: w2
