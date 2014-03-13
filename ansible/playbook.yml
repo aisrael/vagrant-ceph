@@ -1,9 +1,0 @@
----
-- hosts: deploy
-  roles:
-    - deploy
-
-- hosts: node*
-  roles:
-    - node
-    - { role: osd, osd_dir: "osd{{ansible_hostname|replace('node','')}}" }
