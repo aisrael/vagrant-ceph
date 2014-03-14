@@ -1,4 +1,32 @@
 ---
+- name: whoami@hostname
+  shell: echo `whoami`@`hostname`
+  register: u
+- debug: msg="user@host {{u.stdout}}"
+
+- name: whoami@hostname (as ceph)
+  shell: echo `whoami`@`hostname`
+  register: u1
+  remote_user: vagrant
+  sudo: yes
+  sudo_user: ceph
+- debug: msg="user@host {{u1.stdout}}"
+
+- name: whoami@hostname (delegate_to deploy)
+  shell: echo `whoami`@`hostname`
+  register: u2
+  delegate_to: deploy
+- debug: msg="user@host {{u2.stdout}}"
+
+- name: whoami@hostname (as ceph, delegate_to deploy)
+  shell: echo `whoami`@`hostname`
+  register: u3
+  remote_user: vagrant
+  sudo: yes
+  sudo_user: ceph
+  delegate_to: deploy
+- debug: msg="user@host {{u3.stdout}}"
+
 - include: on_deploy.yml
   remote_user: vagrant
   sudo: yes

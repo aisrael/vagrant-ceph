@@ -44,8 +44,8 @@ EOF'
 
 # See http://ceph.com/docs/master/start/quick-ceph-deploy/
 su ceph <<EOF
-mkdir -p /home/ceph/my-cluster
-cd /home/ceph/my-cluster
+mkdir -p /home/ceph/my_cluster
+cd /home/ceph/my_cluster
 ceph-deploy new node1
 ceph-deploy install deploy node1 node2 node3
 ceph-deploy mon create node1

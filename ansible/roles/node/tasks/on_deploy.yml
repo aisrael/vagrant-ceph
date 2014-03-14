@@ -1,8 +1,16 @@
 ---
+- name: whoami@hostname
+  shell: echo `whoami`@`hostname`
+  register: u
+  delegate_to: deploy
+- debug: msg="user@host {{u.stdout}}"
+
 - name: ssh-copy-id to node
-  command: expect -c 'spawn ssh-copy-id ceph@{{inventory_hostname}}; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof'
+  command: expect -c 'spawn ssh-copy-id ceph@{{inventory_hostname}}; expect "Are you sure you want to continue connecting (yes/no)?"; send -- "yes\r"; expect "password:"; send -- "ceph\r"; expect eof' chdir=/home/ceph
+  delegate_to: deploy
 
 - name: ceph-deploy install {{inventory_hostname}}
   command: ceph-deploy install {{inventory_hostname}}
     chdir=/home/ceph/{{cluster_name}}
+  delegate_to: deploy
 

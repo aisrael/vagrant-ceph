@@ -10,10 +10,10 @@
   register: w1
 - debug: msg="whoami {{w1.stdout}}"
 
-- name: mkdir -p ~/my-cluster
+- name: mkdir -p ~/my_cluster
   file: path="~/{{cluster_name}}" state=directory
 
-- name: mkdir -p /home/ceph/.ssh
+- name: mkdir -p ~/.ssh
   file: name=~/.ssh state=directory
 
 - name: ssh-keygen -N "" -f /home/ceph/.ssh/id_rsa

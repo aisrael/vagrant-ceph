@@ -11,12 +11,6 @@
    - expect
   sudo: yes
 
-- name: Create ceph user
-  # Created with: openssl passwd -1 ceph
-  # TODO Turn into variable
-  user: name=ceph password=$1$DmCVnC7z$qnW1sqRIKfLQp7jK3g3Uq0
-  sudo: yes
-
 - name: Add Ceph Key
   apt_key: url={{ ceph.apt_key }} state=present
   sudo: yes
@@ -49,8 +43,8 @@
   apt: update_cache=yes cache_valid_time=1
   sudo: yes
 
-- name: Install tgt packages
-  apt: pkg=tgt state=installed
+- name: Install tgt package
+  apt: pkg=tgt state=installed update_cache=yes cache_valid_time=1
   environment: proxy_env
   sudo: yes
 
@@ -67,7 +61,6 @@
 
 - name: whoami (sudo + sudo_user)
   command: whoami
-  remote_user: "{{ansible_ssh_user}}"
   sudo: yes
   sudo_user: ceph
   register: w2
@@ -75,6 +68,5 @@
 
 - name: Run as ceph
   include: as_ceph.yml
-  remote_user: "{{ansible_ssh_user}}"
   sudo: yes
   sudo_user: ceph

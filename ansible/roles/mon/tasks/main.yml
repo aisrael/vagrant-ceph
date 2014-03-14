@@ -1,6 +1,9 @@
 ---
 - name: ceph-deploy new {{inventory_hostname}} (on deploy)
   command: ceph-deploy new node1 chdir=~/{{cluster_name}}
-    chdir=/home/{{ansible_user_id}}/{{cluster_name}}
+    chdir=/home/ceph/{{cluster_name}}
     creates=ceph.conf
+  remote_user: vagrant
+  sudo: yes
+  sudo_user: ceph
   delegate_to: deploy

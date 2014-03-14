@@ -5,8 +5,8 @@
 
 - hosts: node1
   roles:
-    - node
     - mon
+    - node
 
 - hosts: node2:node3
   roles:

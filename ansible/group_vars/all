@@ -8,7 +8,7 @@ distro_release: ${ansible_distribution_release}
 distro_version: ${ansible_distribution_version}
 
 #### Uncomment the following line if you have apt-cacher-ng running on the Vagrant host
-apt_cache_ng_url: "http://10.0.2.2:3142"
+#apt_cache_ng_url: "http://10.0.2.2:3142"
 
 cluster_name: my_cluster
 
