@@ -1,6 +1,15 @@
 ---
+- name: whoami@hostname
+  shell: echo `whoami`@`hostname`
+  register: u
+  remote_user: vagrant
+  sudo: yes
+  sudo_user: ceph
+  delegate_to: deploy
+- debug: msg="user@host {{u.stdout}}"
+
 - name: ceph-deploy new {{inventory_hostname}} (on deploy)
-  command: ceph-deploy new node1 chdir=~/{{cluster_name}}
+  command: ceph-deploy new {{inventory_hostname}}
     chdir=/home/ceph/{{cluster_name}}
     creates=ceph.conf
   remote_user: vagrant

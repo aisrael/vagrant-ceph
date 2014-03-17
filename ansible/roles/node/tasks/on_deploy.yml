@@ -13,4 +13,3 @@
   command: ceph-deploy install {{inventory_hostname}}
     chdir=/home/ceph/{{cluster_name}}
   delegate_to: deploy
-
